@@ -13,7 +13,7 @@ namespace ProektDB
 {
     public partial class Form1 : Form
     {
-        SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\opilane\source\repos\ProektDB\AppData\Database1.mdf;Integrated Security=True");
+        SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\opilane\source\repos\PROEKT\ProektDB\AppData\Database1.mdf;Integrated Security=True");
         int ArduinoId = 0;
         public Form1()
         {
@@ -36,6 +36,10 @@ namespace ProektDB
                     sqlCmd.Parameters.AddWithValue("@Series", txtSeries.Text.Trim());
                     sqlCmd.Parameters.AddWithValue("@Description", txtDescription.Text.Trim());
                     sqlCmd.Parameters.AddWithValue("@Image", txtImage.Text.Trim());
+                    if (radioButton1.Checked == true)
+                        sqlCmd.Parameters.AddWithValue("@Status", "OK");
+                    else
+                        sqlCmd.Parameters.AddWithValue("@Status", "Broken");
                     sqlCmd.ExecuteNonQuery();
                     MessageBox.Show("Saved Successfull");
                 }
@@ -49,6 +53,10 @@ namespace ProektDB
                     sqlCmd.Parameters.AddWithValue("@Series", txtSeries.Text.Trim());
                     sqlCmd.Parameters.AddWithValue("@Description", txtDescription.Text.Trim());
                     sqlCmd.Parameters.AddWithValue("@Image", txtImage.Text.Trim());
+                    if (radioButton1.Checked == true)
+                        sqlCmd.Parameters.AddWithValue("@Status", "OK");
+                    else
+                        sqlCmd.Parameters.AddWithValue("@Status", "Broken");
                     sqlCmd.ExecuteNonQuery();
                     MessageBox.Show("Updated Successfull");
                 }
@@ -126,11 +134,12 @@ namespace ProektDB
         {
             if (dgvArduino.CurrentRow.Index != -1)
             {
-                ArduinoId = Convert.ToInt32(dgvArduino.CurrentRow.Cells[0].Value.ToString());
-                txtName.Text = dgvArduino.CurrentRow.Cells[1].Value.ToString();
+                //ArduinoId = Convert.ToInt32(dgvArduino.CurrentRow.Cells[0].Value.ToString());
+                txtName.Text = dgvArduino.CurrentRow.Cells[3].Value.ToString();
                 txtSeries.Text = dgvArduino.CurrentRow.Cells[2].Value.ToString();
-                txtDescription.Text = dgvArduino.CurrentRow.Cells[3].Value.ToString();
+                txtDescription.Text = dgvArduino.CurrentRow.Cells[1].Value.ToString();
                 txtImage.Text = dgvArduino.CurrentRow.Cells[4].Value.ToString();
+
                 btnSave.Text = "Update";
                 btnDelete.Enabled = true;
             }
@@ -138,6 +147,8 @@ namespace ProektDB
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'database1DataSet.tbl_Arduino' table. You can move, or remove it, as needed.
+            this.tbl_ArduinoTableAdapter.Fill(this.database1DataSet.tbl_Arduino);
             Reset();
             FillDataGridView();
         }
