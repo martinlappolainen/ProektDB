@@ -13,7 +13,7 @@ namespace ProektDB
 {
     public partial class Form1 : Form
     {
-        SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\opilane\source\repos\PROEKT\ProektDB\AppData\Database1.mdf;Integrated Security=True");
+        SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\opilane\source\repos\Proektik\ProektDB\AppData\Database1.mdf;Integrated Security=True");
         int ArduinoId = 0;
         public Form1()
         {
@@ -37,9 +37,14 @@ namespace ProektDB
                     sqlCmd.Parameters.AddWithValue("@Description", txtDescription.Text.Trim());
                     sqlCmd.Parameters.AddWithValue("@Image", txtImage.Text.Trim());
                     if (radioButton1.Checked == true)
+                    {
                         sqlCmd.Parameters.AddWithValue("@Status", "OK");
+                    }
                     else
+                    {
                         sqlCmd.Parameters.AddWithValue("@Status", "Broken");
+                    }
+                        
                     sqlCmd.ExecuteNonQuery();
                     MessageBox.Show("Saved Successfull");
                 }
@@ -54,9 +59,13 @@ namespace ProektDB
                     sqlCmd.Parameters.AddWithValue("@Description", txtDescription.Text.Trim());
                     sqlCmd.Parameters.AddWithValue("@Image", txtImage.Text.Trim());
                     if (radioButton1.Checked == true)
+                    {
                         sqlCmd.Parameters.AddWithValue("@Status", "OK");
+                    }
                     else
+                    {
                         sqlCmd.Parameters.AddWithValue("@Status", "Broken");
+                    }
                     sqlCmd.ExecuteNonQuery();
                     MessageBox.Show("Updated Successfull");
                 }
@@ -151,6 +160,11 @@ namespace ProektDB
             this.tbl_ArduinoTableAdapter.Fill(this.database1DataSet.tbl_Arduino);
             Reset();
             FillDataGridView();
+        }
+
+        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
